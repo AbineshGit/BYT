@@ -1,0 +1,26 @@
+@isTest
+private class TestContactPhNumberFormatter {
+  @isTest
+  private static void testInsertContact() {
+      
+      List<CONTACT> cont = new List<CONTACT>();
+      
+      Contact c1= new Contact ( lastNAME='CONTACT ABC', Phone='(61)245783214.', MobilePhone='0 490490490', HomePhone='490490490');
+   cont.add(c1);
+    Contact c2 = new Contact (lastNAME='CONTACT DEF', Phone='61-490-490-479.', MobilePhone='61 490490491', HomePhone='(061)1300134544');
+   cont.add(c2);
+      
+      Insert cont;
+      
+    Contact c3= [SELECT NAME, Phone, MobilePhone, HomePhone FROM CONTACT where Id=:c1.Id];
+    Contact c4= [SELECT NAME, Phone, MobilePhone, HomePhone FROM CONTACT where Id=:c2.Id];
+      
+      // In NPSP, Eventhough you pass different values to Phone and Mobile Phone, NPSP will update Phone as Mobile Phone based on NPSP settings. 
+    System.assertEquals('+61 2 4578 3214',c3.phone);
+    System.assertEquals('+61 2 4578 3214',c3.MobilePhone);
+    System.assertEquals('+61 490 490 490',c3.HomePhone);
+    System.assertEquals('+61 490 490 479',c4.phone);
+    System.assertEquals('+61 490 490 479',c4.MobilePhone);
+    System.assertEquals('+61 1300 134 544',c4.HomePhone);
+  }
+}

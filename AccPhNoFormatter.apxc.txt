@@ -1,0 +1,65 @@
+public class AccPhNoFormatter {
+    
+      public static Boolean isFirstTime = true;
+    
+    public static void AccountPhoneValidation(List<Account> AccountList){
+        
+        list<Account> updateAccount = new list<Account>();
+        String countryCode = '+61';
+        Integer WL;
+        Integer diff;
+        String ph;
+        String phone;
+        
+        for (Account acc : AccountList){
+            if (acc.Phone != null){  
+                
+                system.debug('Original Phone is : '+acc.Phone);
+                
+                phone = acc.Phone.deleteWhitespace().replaceAll('\\D','').replaceFirst( '^0+', '');
+                
+              system.debug('phone before 61 replace : '+phone);
+                
+                if (phone.startsWith('61')){
+                    
+                    phone = phone.replaceFirst( '61', '');
+                }
+                
+                system.debug('phone after 61 replace : '+phone);
+
+                	 ph = Phone;
+                     
+              if ((ph.startsWith('1800') || ph.startsWith('1300'))  && ph.length()==10)
+              {
+                   ph = countryCode+' '+ph.substring(0, 4)+' '+ph.substring(4, 7)+' '+ph.substring(7, 10);
+                  acc.Phone = ph;
+              }        
+             
+             else if(((ph.startswith('4')) ||ph.startswith('2') || ph.startswith('3')|| ph.startswith('7')|| ph.startswith('8')) && ph.length()==9)
+             {
+                
+                if(ph.startswith('4')){
+               
+                	ph = countryCode+' '+ph.substring(0, 3)+' '+ph.substring(3, 6)+' '+ph.substring(6, 9);
+                    
+                }
+                else if (ph.startswith('2') || ph.startswith('3')|| ph.startswith('7')|| ph.startswith('8'))
+                {
+                    ph = countryCode+' '+ph.substring(0, 1)+' '+ph.substring(1, 5)+' '+ph.substring(5, 9);
+                }
+                
+                 system.debug('New Phone is : '+ph);
+                
+                acc.Phone = ph;
+                                
+             }
+ 
+            }
+            
+            updateAccount.add(acc);
+        }
+        
+        update updateAccount;
+    }
+
+}

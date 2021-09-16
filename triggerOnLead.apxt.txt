@@ -1,0 +1,13 @@
+trigger triggerOnLead on Lead (after insert, after update) {
+    
+    List<Lead> LeadList = new List<Lead>();
+    
+    LeadList = [SELECT ID, Phone, MobilePhone FROM Lead where ID IN :Trigger.New];
+    
+    system.debug('Size is : '+LeadList.size());
+    
+     if(LeadPhNoFormatter.isFirstTime){
+        LeadPhNoFormatter.isFirstTime = false;
+    LeadPhNoFormatter.Mobilevaildation(LeadList);
+     } 
+ }

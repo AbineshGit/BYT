@@ -1,0 +1,15 @@
+trigger TriggerOnAccount on Account (after insert, after update) {
+    
+    List<Account> AccountList = new List<Account>();
+    
+    AccountList = [SELECT ID, NAME, PHONE FROM ACCOUNT where ID IN :Trigger.New];
+    
+    system.debug('Size is : '+AccountList.size());
+    
+     if(AccPhNoFormatter.isFirstTime){
+        AccPhNoFormatter.isFirstTime = false;
+    AccPhNoFormatter.AccountPhoneValidation(AccountList);
+     }
+   
+
+}
